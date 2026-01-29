@@ -14,7 +14,7 @@ fi
 
 make
 if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}" != "" ]]; then
-make check || (cat tests/test-suite.log && exit 1)
+   make check || (cat tests/test-suite.log && exit 1)
 fi
 make install
 

@@ -1,31 +1,27 @@
+{% set name = "check" %}
 {% set version = "0.15.2" %}
 
 package:
-  name: check
+  name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://github.com/libcheck/check/releases/download/{{ version }}/check-{{ version }}.tar.gz
+  url: https://github.com/libcheck/{{ name }}/releases/download/{{ version }}/{{ name }}-{{ version }}.tar.gz
   sha256: a8de4e0bacfb4d76dd1c618ded263523b53b85d92a146d8835eb1a52932fa20a
-  patches:
-    # Has been merged tomaster, only affects the precision of the tests
-    # Necessary to move ppc64le forward
-    # https://github.com/libcheck/check/issues/333
-    # https://github.com/libcheck/check/pull/322
-    - 322-ppc64le_test_tolerance.patch
 
 build:
-  number: 1
+  number: 0
   skip: true  # [win]
 
 requirements:
   build:
+    - {{ stdlib('c') }}
+    - {{ compiler('c') }}
     - automake
     - make
     - libtool
     - pkg-config
     - gnuconfig  # [unix]
-    - {{ compiler('c') }}
   host:
     - texinfo
 
@@ -34,10 +30,14 @@ test:
     - checkmk --version
 
 about:
-  home: http://libcheck.github.io/check/
+  home: http://libcheck.github.io/check
   license: LGPL-2.1
+  license_family: LGPL
   license_file: COPYING.LESSER
   summary: Unit testing framework for C
+  description: Unit testing framework for C
+  dev_url: https://github.com/libcheck/check
+  doc_url: https://libcheck.github.io/check/doc/check_html/index.html
 
 extra:
   recipe-maintainers:
